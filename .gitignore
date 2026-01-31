@@ -1,0 +1,19 @@
+# ignore all __pycache__ folders anywhere
+__pycache__/
+
+# ignore compiled python files
+*.pyc
+*.pyo
+*.pyd
+
+# ignore this specific egg-info dir in root
+/loggerric.egg-info/
+
+# ignore dist dir
+/dist/
+
+# ignore this specific file in root
+/pyproject.toml
+
+# ignore this specific file in root
+/validate_metods.py
