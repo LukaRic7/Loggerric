@@ -1,10 +1,18 @@
 from colorama import Fore
 from loggerric._timestamp import *
 from loggerric._log_to_file import *
+import json, functools, inspect
 from loggerric._timer import *
 from enum import Enum, auto
 from typing import Callable
-import json, functools
+
+def _caller_file(depth:int=2) -> str:
+    frame = inspect.currentframe()
+    for _ in range(depth):
+        frame = frame.f_back
+    
+    filename = frame.f_code.co_filename
+    return f'<{os.path.relpath(filename)}>'
 
 def _apply_highlight(text:str, highlight:str, color:str,
                      hl_color:str=Fore.YELLOW):
@@ -64,7 +72,7 @@ class Log:
             highlighted_text = _apply_highlight(raw_text, highlight, Fore.GREEN)
 
             ts = Timestamp.get(return_with_ansi=True)
-            finished_text = f'{ts}{Fore.GREEN}[i] {highlighted_text}{Fore.RESET}'
+            finished_text = f'{ts}{Fore.GREEN}[i] {_caller_file()} {highlighted_text}{Fore.RESET}'
             print(finished_text)
 
             # Log to file
@@ -95,7 +103,7 @@ class Log:
                                                 Fore.YELLOW, Fore.WHITE)
 
             ts = Timestamp.get(return_with_ansi=True)
-            finished_text = f'{ts}{Fore.YELLOW}[w] {highlighted_text}{Fore.RESET}'
+            finished_text = f'{ts}{Fore.YELLOW}[w] {_caller_file()} {highlighted_text}{Fore.RESET}'
             print(finished_text)
 
             # Log to file
@@ -127,7 +135,7 @@ class Log:
             highlighted_text = _apply_highlight(raw_text, highlight, Fore.RED)
 
             ts = Timestamp.get(return_with_ansi=True)
-            finished_text = f'{ts}{Fore.RED}[!] {highlighted_text}{Fore.RESET}'
+            finished_text = f'{ts}{Fore.RED}[!] {_caller_file()} {highlighted_text}{Fore.RESET}'
             print(finished_text)
 
             # Log to file
@@ -160,7 +168,7 @@ class Log:
                                                 Fore.LIGHTBLACK_EX)
 
             ts = Timestamp.get(return_with_ansi=True)
-            finished_text = f'{ts}{Fore.LIGHTBLACK_EX}[?] {highlighted_text}{Fore.RESET}'
+            finished_text = f'{ts}{Fore.LIGHTBLACK_EX}[?] {_caller_file()} {highlighted_text}{Fore.RESET}'
             print(finished_text)
 
             # Log to file
@@ -448,3 +456,5 @@ class Log:
                 return result
             return wrapper
         return decorator
+
+Log.info('test')

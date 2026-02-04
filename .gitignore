@@ -12,8 +12,10 @@ __pycache__/
 # ignore dist dir
 /dist/
 
+.vscode/
+
 # ignore this specific file in root
 /pyproject.toml
 
 # ignore this specific file in root
-/validate_metods.py
+/validate_methods.py
