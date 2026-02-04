@@ -456,5 +456,3 @@ class Log:
                 return result
             return wrapper
         return decorator
-
-Log.info('test')
