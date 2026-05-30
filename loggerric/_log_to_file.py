@@ -48,8 +48,7 @@ class LogToFile:
     }
 
     _should_dump = False
-    _dump_path = os.path.join(os.getenv('HOMEDRIVE'), os.getenv('HOMEPATH'),
-                              'loggerric_log_dump.log')
+    _dump_path = os.path.join(os.path.expanduser("~"), 'loggerric_log_dump.log')
 
     # Internal queue/writer for thread-safe writes
     __writer_queue: "queue.Queue[str]" = queue.Queue()
