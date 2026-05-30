@@ -2,6 +2,10 @@
 
 **loggerric** is a lightweight Python utility library providing advanced logging, for CLI applications. It offers colorful, formatted output to make debugging, logging and tracking easier.
 
+**PyPi Statistics:**
+
+![Monthly Downloads](https://img.shields.io/pypi/dm/loggerric)
+
 ---
 
 ## Features
