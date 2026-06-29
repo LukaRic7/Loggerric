@@ -46,11 +46,10 @@ class Log:
     **Contains various logging methods.**
     """
     # Keep track of what should be logged
-    _active_levels = { LogLevel.INFO, LogLevel.WARN, LogLevel.ERROR,
-                       LogLevel.DEBUG }
+    _active_levels = { LogLevel.INFO, LogLevel.WARN, LogLevel.ERROR, LogLevel.DEBUG }
 
     @classmethod
-    def info(cls, *content:str, highlight:str|list[str]=None) -> None:
+    def info(cls, *content:str, highlight:str|list[str]=None, display_caller_file:bool=False) -> None:
         """
         **Format a message as information.**
 
@@ -71,8 +70,10 @@ class Log:
             # Highlight text
             highlighted_text = _apply_highlight(raw_text, highlight, Fore.GREEN)
 
+            file = _caller_file() + ' ' if display_caller_file else ''
+
             ts = Timestamp.get(return_with_ansi=True)
-            finished_text = f'{ts}{Fore.GREEN}[i] {_caller_file()} {highlighted_text}{Fore.RESET}'
+            finished_text = f'{ts}{Fore.GREEN}[i] {file}{highlighted_text}{Fore.RESET}'
             print(finished_text)
 
             # Log to file
@@ -80,7 +81,7 @@ class Log:
                 LogToFile._log(escape_ansi(finished_text))
 
     @classmethod
-    def warn(cls, *content:str, highlight:str|list[str]=None) -> None:
+    def warn(cls, *content:str, highlight:str|list[str]=None, display_caller_file:bool=False) -> None:
         """
         **Format a message as a warning.**
 
@@ -102,8 +103,10 @@ class Log:
             highlighted_text = _apply_highlight(raw_text, highlight,
                                                 Fore.YELLOW, Fore.WHITE)
 
+            file = _caller_file() + ' ' if display_caller_file else ''
+
             ts = Timestamp.get(return_with_ansi=True)
-            finished_text = f'{ts}{Fore.YELLOW}[w] {_caller_file()} {highlighted_text}{Fore.RESET}'
+            finished_text = f'{ts}{Fore.YELLOW}[w] {file}{highlighted_text}{Fore.RESET}'
             print(finished_text)
 
             # Log to file
@@ -112,7 +115,7 @@ class Log:
 
     @classmethod
     def error(cls, *content:str, quit_after_log:bool=False,
-              highlight:str|list[str]=None) -> None:
+              highlight:str|list[str]=None, display_caller_file:bool=False) -> None:
         """
         **Format a message as an error.**
 
@@ -134,8 +137,10 @@ class Log:
             # Highlight text
             highlighted_text = _apply_highlight(raw_text, highlight, Fore.RED)
 
+            file = _caller_file() + ' ' if display_caller_file else ''
+
             ts = Timestamp.get(return_with_ansi=True)
-            finished_text = f'{ts}{Fore.RED}[!] {_caller_file()} {highlighted_text}{Fore.RESET}'
+            finished_text = f'{ts}{Fore.RED}[!] {file}{highlighted_text}{Fore.RESET}'
             print(finished_text)
 
             # Log to file
@@ -145,7 +150,7 @@ class Log:
             if quit_after_log: exit()
 
     @classmethod
-    def debug(cls, *content:str, highlight:str|list[str]=None) -> None:
+    def debug(cls, *content:str, highlight:str|list[str]=None, display_caller_file:bool=False) -> None:
         """
         **Format a message as a debug message.**
 
@@ -167,8 +172,10 @@ class Log:
             highlighted_text = _apply_highlight(raw_text, highlight,
                                                 Fore.LIGHTBLACK_EX)
 
+            file = _caller_file() + ' ' if display_caller_file else ''
+
             ts = Timestamp.get(return_with_ansi=True)
-            finished_text = f'{ts}{Fore.LIGHTBLACK_EX}[?] {_caller_file()} {highlighted_text}{Fore.RESET}'
+            finished_text = f'{ts}{Fore.LIGHTBLACK_EX}[?] {file}{highlighted_text}{Fore.RESET}'
             print(finished_text)
 
             # Log to file
